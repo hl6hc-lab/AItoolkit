@@ -1,0 +1,1975 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>疫苗医学部 AI 工具全家桶 | Sanofi Vaccines</title>
+    <style>
+        :root {
+            --sanofi-purple: #663399;
+            --sanofi-purple-dark: #4a2070;
+            --sanofi-purple-light: #8855bb;
+            --sanofi-teal: #00A3A1;
+            --sanofi-teal-dark: #007a78;
+            --sanofi-teal-light: #33b8b6;
+            --sanofi-gray: #f5f5f7;
+            --sanofi-dark: #1a1a2e;
+            --sanofi-text: #2c2c3e;
+            --sanofi-text-light: #6b6b8a;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(102,51,153,0.08);
+            --shadow-md: 0 4px 20px rgba(102,51,153,0.12);
+            --shadow-lg: 0 8px 40px rgba(102,51,153,0.18);
+            --radius: 12px;
+            --radius-lg: 20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--sanofi-gray);
+            color: var(--sanofi-text);
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(135deg, var(--sanofi-purple-dark) 0%, var(--sanofi-purple) 50%, var(--sanofi-purple-light) 100%);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 24px rgba(102,51,153,0.3);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .sanofi-logo {
+            background: white;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--sanofi-purple);
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 32px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .logo-subtitle {
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .logo-subtitle strong {
+            display: block;
+            color: white;
+            font-size: 15px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .compliance-badge {
+            background: rgba(0,163,161,0.25);
+            border: 1px solid rgba(0,163,161,0.5);
+            color: #7ffffd;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .compliance-badge:hover {
+            background: rgba(0,163,161,0.4);
+        }
+
+        .header-main {
+            padding: 28px 40px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .title-block h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .title-block h1 span {
+            color: #a8f0ee;
+        }
+
+        .title-block p {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 24px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item .num {
+            font-size: 24px;
+            font-weight: 800;
+            color: #a8f0ee;
+            line-height: 1;
+        }
+
+        .stat-item .label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 2px;
+        }
+
+        /* ===== SEARCH BAR ===== */
+        .search-container {
+            padding: 0 40px 20px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            max-width: 600px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        #searchInput::placeholder { color: rgba(255,255,255,0.45); }
+
+        #searchInput:focus {
+            background: rgba(255,255,255,0.18);
+            border-color: rgba(255,255,255,0.4);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.1);
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .search-clear:hover { background: rgba(255,255,255,0.35); }
+        .search-clear.visible { display: flex; }
+
+        /* ===== NAV TABS ===== */
+        .nav-tabs {
+            background: white;
+            padding: 0 40px;
+            display: flex;
+            gap: 4px;
+            border-bottom: 2px solid #eee;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar { display: none; }
+
+        .nav-tab {
+            padding: 14px 20px;
+            border: none;
+            background: none;
+            color: var(--sanofi-text-light);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-tab:hover { color: var(--sanofi-purple); }
+
+        .nav-tab.active {
+            color: var(--sanofi-purple);
+            border-bottom-color: var(--sanofi-purple);
+            font-weight: 700;
+        }
+
+        .tab-count {
+            background: var(--sanofi-gray);
+            color: var(--sanofi-text-light);
+            font-size: 11px;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .nav-tab.active .tab-count {
+            background: rgba(102,51,153,0.12);
+            color: var(--sanofi-purple);
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+            padding: 28px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ===== SECTION HEADERS ===== */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .section-icon.purple { background: rgba(102,51,153,0.1); }
+        .section-icon.teal { background: rgba(0,163,161,0.1); }
+        .section-icon.blue { background: rgba(0,100,200,0.1); }
+        .section-icon.green { background: rgba(0,160,80,0.1); }
+        .section-icon.orange { background: rgba(255,140,0,0.1); }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--sanofi-text);
+        }
+
+        .section-subtitle {
+            font-size: 12px;
+            color: var(--sanofi-text-light);
+            margin-top: 2px;
+        }
+
+        /* ===== TOOL CARDS ===== */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--sanofi-purple), var(--sanofi-teal));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(102,51,153,0.15);
+        }
+
+        .tool-card:hover::before { opacity: 1; }
+
+        .tool-card.internal { border-left: 3px solid var(--sanofi-purple); }
+        .tool-card.external { border-left: 3px solid var(--sanofi-teal); }
+        .tool-card.medical { border-left: 3px solid #e74c8b; }
+        .tool-card.featured {
+            background: linear-gradient(135deg, rgba(102,51,153,0.03), rgba(0,163,161,0.03));
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .card-icon-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .tool-icon.purple-bg { background: linear-gradient(135deg, rgba(102,51,153,0.12), rgba(102,51,153,0.06)); }
+        .tool-icon.teal-bg { background: linear-gradient(135deg, rgba(0,163,161,0.12), rgba(0,163,161,0.06)); }
+        .tool-icon.pink-bg { background: linear-gradient(135deg, rgba(231,76,139,0.12), rgba(231,76,139,0.06)); }
+        .tool-icon.blue-bg { background: linear-gradient(135deg, rgba(0,100,200,0.12), rgba(0,100,200,0.06)); }
+        .tool-icon.green-bg { background: linear-gradient(135deg, rgba(0,160,80,0.12), rgba(0,160,80,0.06)); }
+        .tool-icon.orange-bg { background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(255,140,0,0.06)); }
+
+        .tool-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--sanofi-text);
+            line-height: 1.2;
+        }
+
+        .tool-type-badge {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .badge-internal {
+            background: rgba(102,51,153,0.1);
+            color: var(--sanofi-purple);
+        }
+
+        .badge-external {
+            background: rgba(0,163,161,0.1);
+            color: var(--sanofi-teal-dark);
+        }
+
+        .badge-medical {
+            background: rgba(231,76,139,0.1);
+            color: #c0356a;
+        }
+
+        .badge-star {
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            color: white;
+        }
+
+        .tool-desc {
+            font-size: 13px;
+            color: var(--sanofi-text-light);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .tool-url {
+            font-size: 11px;
+            color: var(--sanofi-text-light);
+            font-family: monospace;
+            background: var(--sanofi-gray);
+            padding: 4px 8px;
+            border-radius: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 160px;
+        }
+
+        .launch-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--sanofi-purple), var(--sanofi-purple-light));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .launch-btn:hover {
+            background: linear-gradient(135deg, var(--sanofi-purple-dark), var(--sanofi-purple));
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(102,51,153,0.3);
+        }
+
+        .launch-btn.teal {
+            background: linear-gradient(135deg, var(--sanofi-teal), var(--sanofi-teal-light));
+        }
+
+        .launch-btn.teal:hover {
+            background: linear-gradient(135deg, var(--sanofi-teal-dark), var(--sanofi-teal));
+            box-shadow: 0 4px 12px rgba(0,163,161,0.3);
+        }
+
+        /* ===== WORKFLOW SECTION ===== */
+        .workflow-section {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .workflow-card {
+            background: linear-gradient(135deg, rgba(102,51,153,0.04), rgba(0,163,161,0.04));
+            border: 1px solid rgba(102,51,153,0.1);
+            border-radius: var(--radius);
+            padding: 16px;
+        }
+
+        .workflow-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--sanofi-purple);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .workflow-steps {
+            list-style: none;
+        }
+
+        .workflow-steps li {
+            font-size: 12px;
+            color: var(--sanofi-text-light);
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px dashed rgba(0,0,0,0.06);
+        }
+
+        .workflow-steps li:last-child { border-bottom: none; }
+
+        .step-num {
+            width: 18px;
+            height: 18px;
+            background: var(--sanofi-purple);
+            color: white;
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+        .sidebar-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--sanofi-text);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Compliance Card */
+        .compliance-card {
+            background: linear-gradient(135deg, #fff8f0, #fff3e8);
+            border: 1px solid rgba(255,140,0,0.2);
+        }
+
+        .compliance-item {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,140,0,0.1);
+        }
+
+        .compliance-item:last-child { border-bottom: none; }
+
+        .compliance-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .compliance-text strong {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--sanofi-text);
+            margin-bottom: 2px;
+        }
+
+        .compliance-text p {
+            font-size: 11px;
+            color: var(--sanofi-text-light);
+            line-height: 1.5;
+        }
+
+        /* Quick Links */
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--sanofi-text);
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            margin-bottom: 6px;
+        }
+
+        .quick-link:hover {
+            background: rgba(102,51,153,0.06);
+            border-color: rgba(102,51,153,0.15);
+            color: var(--sanofi-purple);
+        }
+
+        .quick-link-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .ql-purple { background: rgba(102,51,153,0.1); }
+        .ql-teal { background: rgba(0,163,161,0.1); }
+        .ql-blue { background: rgba(0,100,200,0.1); }
+        .ql-orange { background: rgba(255,140,0,0.1); }
+
+        .quick-link-arrow {
+            margin-left: auto;
+            color: var(--sanofi-text-light);
+            font-size: 12px;
+        }
+
+        /* Data Protection */
+        .protection-rule {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .protection-rule:last-child { border-bottom: none; }
+
+        .rule-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .dot-green { background: #22c55e; }
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+
+        .rule-text {
+            font-size: 12px;
+            color: var(--sanofi-text-light);
+            line-height: 1.5;
+        }
+
+        .rule-text strong {
+            color: var(--sanofi-text);
+            font-weight: 600;
+        }
+
+        /* ===== CONTENT SECTIONS ===== */
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+
+        /* ===== NO RESULTS ===== */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--sanofi-text-light);
+            display: none;
+        }
+
+        .no-results.visible { display: block; }
+        .no-results .icon { font-size: 48px; margin-bottom: 12px; }
+        .no-results h3 { font-size: 18px; margin-bottom: 8px; color: var(--sanofi-text); }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.open { display: flex; }
+
+        .modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            max-width: 560px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+            animation: modalIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--sanofi-text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-close {
+            background: var(--sanofi-gray);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover { background: #e0e0e0; }
+
+        .modal-section {
+            margin-bottom: 20px;
+        }
+
+        .modal-section h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--sanofi-purple);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-rule {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 12px;
+            background: var(--sanofi-gray);
+            border-radius: 8px;
+            margin-bottom: 6px;
+        }
+
+        .modal-rule-icon { font-size: 16px; flex-shrink: 0; }
+
+        .modal-rule-text {
+            font-size: 13px;
+            color: var(--sanofi-text);
+            line-height: 1.5;
+        }
+
+        .modal-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--sanofi-purple), var(--sanofi-purple-light));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102,51,153,0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--sanofi-dark);
+            color: rgba(255,255,255,0.6);
+            padding: 24px 40px;
+            margin-top: 20px;
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            font-size: 14px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        .footer-divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .footer-text { font-size: 12px; }
+
+        .footer-team {
+            font-size: 11px;
+            color: rgba(255,255,255,0.35);
+            text-align: right;
+        }
+
+        .footer-team span {
+            color: rgba(0,163,161,0.7);
+            font-weight: 500;
+        }
+
+        /* ===== SEARCH HIGHLIGHT ===== */
+        .highlight {
+            background: rgba(255,220,0,0.35);
+            border-radius: 3px;
+            padding: 0 2px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .sidebar { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        }
+
+        @media (max-width: 768px) {
+            .header-top, .header-main, .search-container { padding-left: 20px; padding-right: 20px; }
+            .nav-tabs { padding: 0 20px; }
+            .main-layout { padding: 20px; }
+            .title-block h1 { font-size: 20px; }
+            .stats-row { display: none; }
+            footer { padding: 20px; }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .tool-card { animation: fadeInUp 0.4s ease both; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tool-card:nth-child(1) { animation-delay: 0.05s; }
+        .tool-card:nth-child(2) { animation-delay: 0.1s; }
+        .tool-card:nth-child(3) { animation-delay: 0.15s; }
+        .tool-card:nth-child(4) { animation-delay: 0.2s; }
+        .tool-card:nth-child(5) { animation-delay: 0.25s; }
+        .tool-card:nth-child(6) { animation-delay: 0.3s; }
+
+        .section-block { margin-bottom: 32px; }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .tag {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            background: rgba(102,51,153,0.08);
+            color: var(--sanofi-purple);
+        }
+
+        .tag.teal {
+            background: rgba(0,163,161,0.08);
+            color: var(--sanofi-teal-dark);
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="header-top">
+        <div class="logo-area">
+            <div class="sanofi-logo">Sanofi</div>
+            <div class="logo-divider"></div>
+            <div class="logo-subtitle">
+                <strong>疫苗医学部 · Vaccines Medical</strong>
+                AI 工具全家桶 · AI Tools Suite
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="compliance-badge" onclick="openComplianceModal()">
+                🛡️ 合规指南
+            </button>
+        </div>
+    </div>
+
+    <div class="header-main">
+        <div class="title-block">
+            <h1>🧬 疫苗医学部 <span>AI 工具全家桶</span></h1>
+            <p>Vaccine Medical AI Tools Suite · 内外部工具一站式导航平台</p>
+        </div>
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="num">22</div>
+                <div class="label">工具总数</div>
+            </div>
+            <div class="stat-item">
+                <div class="num">8</div>
+                <div class="label">内部工具</div>
+            </div>
+            <div class="stat-item">
+                <div class="num">7</div>
+                <div class="label">分类模块</div>
+            </div>
+            <div class="stat-item">
+                <div class="num">24/7</div>
+                <div class="label">全天可用</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="搜索工具名称、功能或关键词..." oninput="handleSearch(this.value)">
+            <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+        </div>
+    </div>
+</header>
+
+<!-- ===== NAV TABS ===== -->
+<nav class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('all', this)">
+        🏠 全部工具 <span class="tab-count">22</span>
+    </button>
+    <button class="nav-tab" onclick="switchTab('internal', this)">
+        🏢 Sanofi 内部 <span class="tab-count">8</span>
+    </button>
+    <button class="nav-tab" onclick="switchTab('external', this)">
+        🌐 通用 AI <span class="tab-count">4</span>
+    </button>
+    <button class="nav-tab" onclick="switchTab('medical', this)">
+        🔬 医学研究 <span class="tab-count">3</span>
+    </button>
+    <button class="nav-tab" onclick="switchTab('knowledge', this)">
+        📚 知识管理 <span class="tab-count">1</span>
+    </button>
+    <button class="nav-tab" onclick="switchTab('creative', this)">
+        🖼️ 创意生成 <span class="tab-count">2</span>
+    </button>
+    <button class="nav-tab" onclick="switchTab('dev', this)">
+        💻 开发工具 <span class="tab-count">3</span>
+    </button>
+    <button class="nav-tab" onclick="switchTab('presentation', this)">
+        🎯 演示效率 <span class="tab-count">2</span>
+    </button>
+    <button class="nav-tab" onclick="switchTab('workflow', this)">
+        ⚡ 推荐工作流
+    </button>
+</nav>
+
+<!-- ===== MAIN LAYOUT ===== -->
+<div class="main-layout">
+    <div class="main-content">
+
+        <!-- NO RESULTS -->
+        <div class="no-results" id="noResults">
+            <div class="icon">🔍</div>
+            <h3>未找到匹配工具</h3>
+            <p>请尝试其他关键词，或浏览全部工具分类</p>
+        </div>
+
+        <!-- ALL / INTERNAL SECTION -->
+        <div class="content-section active" id="section-all">
+
+            <!-- Internal Tools -->
+            <div class="section-block" data-category="internal">
+                <div class="section-header">
+                    <div class="section-icon purple">🏢</div>
+                    <div>
+                        <div class="section-title">Sanofi 内部工具</div>
+                        <div class="section-subtitle">已通过安全审查 · 优先使用 · 数据安全有保障</div>
+                    </div>
+                </div>
+                <div class="tools-grid" id="grid-internal">
+
+                    <div class="tool-card internal featured" data-name="Concierge" data-tags="genai 对话 助手 邮件 翻译 文档 内部">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon purple-bg">🤖</div>
+                                <div>
+                                    <div class="tool-name">Concierge</div>
+                                    <div class="tag-row"><span class="tag">GenAI 助手</span><span class="tag">全员可用</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-internal">内部</span>
+                        </div>
+                        <p class="tool-desc">Sanofi 自研 GenAI 助手，基于 10,000+ 内部知识库训练，支持邮件管理、信息检索、文档生成、多语言翻译，7×24 小时在线。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">concierge.sanofi.com</span>
+                            <a href="https://concierge.sanofi.com" target="_blank" class="launch-btn">🚀 立即使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card internal" data-name="DAI VINCI" data-tags="内容生成 本地化 邮件 品牌 MLR 合规 商业">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon purple-bg">🎨</div>
+                                <div>
+                                    <div class="tool-name">DAI VINCI</div>
+                                    <div class="tag-row"><span class="tag">内容生成</span><span class="tag">本地化</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-internal">内部</span>
+                        </div>
+                        <p class="tool-desc">Sanofi 商业内容生成平台，支持 AI 辅助邮件设计、品牌内容创作、多语言本地化及 MLR 合规审核自动提交，覆盖全品牌全国家。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">genai.prod.accelerator.sanofi</span>
+                            <a href="https://genai.prod.accelerator.sanofi" target="_blank" class="launch-btn">🚀 立即使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card internal featured" data-name="Plai" data-tags="决策 数据 财务 商业 供应链 分析 预测">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon teal-bg">📊</div>
+                                <div>
+                                    <div class="tool-name">Plai</div>
+                                    <div class="tag-row"><span class="tag teal">决策智能</span><span class="tag teal">移动端</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-internal">内部</span>
+                        </div>
+                        <p class="tool-desc">Sanofi 旗舰级 AI 决策平台，整合财务、商业、供应链等全域数据，提供实时洞察与预测分析，20,000+ 员工日常使用，支持移动端。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">plai.sanofi.com</span>
+                            <a href="https://plai.sanofi.com" target="_blank" class="launch-btn">🚀 立即使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card internal featured" data-name="MedIS" data-tags="医学 洞察 MSL 拜访 KOL 数据分析 医学部">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon pink-bg">🏥</div>
+                                <div>
+                                    <div class="tool-name">MedIS</div>
+                                    <div class="tag-row"><span class="tag">医学洞察</span><span class="tag">医学部专属</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-medical">医学专属</span>
+                        </div>
+                        <p class="tool-desc">医学部专属 GenAI 洞察引擎，分析 MSL 拜访记录、KOL 互动等海量数据，将数月分析压缩至分钟级，支持医学策略决策。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">medinsights.sanofi.com</span>
+                            <a href="https://medinsights.sanofi.com" target="_blank" class="launch-btn" style="background:linear-gradient(135deg,#c0356a,#e74c8b);">🚀 立即使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card internal" data-name="AI Foundry" data-tags="AI开发 平台 ML GenAI 项目 研究">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon blue-bg">🧠</div>
+                                <div>
+                                    <div class="tool-name">AI Foundry</div>
+                                    <div class="tag-row"><span class="tag">AI 开发平台</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-internal">内部</span>
+                        </div>
+                        <p class="tool-desc">Sanofi 官方 AI 开发平台，整合 Data/ML/GenAI/Agentic AI 能力，所有 AI 项目必须通过此平台开发，从研究到上市全流程覆盖。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">sanofi.sharepoint.com</span>
+                            <a href="https://sanofi.sharepoint.com/sites/bp_global-digital-data/SitePages/The-AI-Foundry.aspx" target="_blank" class="launch-btn">🚀 立即使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card internal" data-name="OneAI" data-tags="MLOps AI模型 部署 监控 机器学习">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon blue-bg">⚙️</div>
+                                <div>
+                                    <div class="tool-name">OneAI</div>
+                                    <div class="tag-row"><span class="tag">Expert ML</span><span class="tag">MLOps</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-internal">内部</span>
+                        </div>
+                        <p class="tool-desc">AI Foundry 核心组件，提供端到端 MLOps 能力，支持 AI 模型构建、部署与监控，全员可申请访问，7×24 小时高可用。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">oneaiv2.sanofi.com</span>
+                            <a href="https://oneaiv2.sanofi.com" target="_blank" class="launch-btn">🚀 立即使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card internal" data-name="Medvi" data-tags="合规 CRM 拜访记录 审查 医学部">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon pink-bg">🛡️</div>
+                                <div>
+                                    <div class="tool-name">Medvi</div>
+                                    <div class="tag-row"><span class="tag">合规审核</span><span class="tag">医学部专属</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-medical">医学专属</span>
+                        </div>
+                        <p class="tool-desc">MSL 拜访记录合规审查工具，自动识别 CRM 自由文本中潜在不合规语言，为 MedIS 数据入库提供合规保障。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">sanofi.sharepoint.com</span>
+                            <a href="https://sanofi.sharepoint.com/sites/bp_global-digital-data/SitePages/Medvi.aspx" target="_blank" class="launch-btn" style="background:linear-gradient(135deg,#c0356a,#e74c8b);">🚀 立即使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card internal" data-name="OneSupport" data-tags="IT 支持 工单 服务台 HR 财务">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon teal-bg">🎫</div>
+                                <div>
+                                    <div class="tool-name">OneSupport</div>
+                                    <div class="tag-row"><span class="tag teal">IT 服务台</span><span class="tag teal">一站式</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-internal">内部</span>
+                        </div>
+                        <p class="tool-desc">Sanofi 统一 IT 支持平台，提供知识库查询、服务请求提交、工单管理，是员工解决 IT/HR/财务问题的一站式入口。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">sanofiservices.service-now.com</span>
+                            <a href="https://sanofiservices.service-now.com/onesupport" target="_blank" class="launch-btn teal">🚀 立即使用</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- External AI -->
+            <div class="section-block" data-category="external">
+                <div class="section-header">
+                    <div class="section-icon teal">🌐</div>
+                    <div>
+                        <div class="section-title">通用对话 AI</div>
+                        <div class="section-subtitle">外部工具 · 使用时请遵循 AI Readiness Guidelines · 禁止上传内部数据</div>
+                    </div>
+                </div>
+                <div class="tools-grid" id="grid-external">
+
+                    <div class="tool-card external" data-name="ChatGPT" data-tags="openai gpt 对话 代码 图像 多模态">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon green-bg">💬</div>
+                                <div>
+                                    <div class="tool-name">ChatGPT</div>
+                                    <div class="tag-row"><span class="tag teal">通用 GenAI</span><span class="tag teal">多模态</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">OpenAI 旗舰对话 AI，支持文本生成、代码编写、数据分析、图像理解，GPT-4o 多模态能力强大，需注意数据安全合规。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">chatgpt.com</span>
+                            <a href="https://chatgpt.com" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card external" data-name="Claude" data-tags="anthropic 长文本 文档分析 学术 推理 安全">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon orange-bg">🧡</div>
+                                <div>
+                                    <div class="tool-name">Claude</div>
+                                    <div class="tag-row"><span class="tag teal">长文本</span><span class="tag teal">200K tokens</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">Anthropic 出品，以长文本处理（200K tokens）和安全性著称，擅长文档分析、学术写作和复杂推理任务。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">claude.ai</span>
+                            <a href="https://claude.ai" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card external" data-name="Gemini" data-tags="google 多模态 搜索 文档 邮件 实时">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon blue-bg">✨</div>
+                                <div>
+                                    <div class="tool-name">Gemini</div>
+                                    <div class="tag-row"><span class="tag teal">Google AI</span><span class="tag teal">实时检索</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">Google 多模态 AI，深度整合 Google 生态（搜索、文档、邮件），支持实时信息检索，适合研究和内容创作。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">gemini.google.com</span>
+                            <a href="https://gemini.google.com" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card external" data-name="Perplexity" data-tags="搜索 引用 文献 实时 行业 竞品">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon teal-bg">🔎</div>
+                                <div>
+                                    <div class="tool-name">Perplexity</div>
+                                    <div class="tag-row"><span class="tag teal">AI 搜索</span><span class="tag teal">可溯源</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">实时联网 AI 搜索工具，每个回答附带可溯源引用，适合快速获取最新医学文献、行业动态和竞品信息。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">perplexity.ai</span>
+                            <a href="https://perplexity.ai" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Medical Research -->
+            <div class="section-block" data-category="medical">
+                <div class="section-header">
+                    <div class="section-icon" style="background:rgba(231,76,139,0.1);">🔬</div>
+                    <div>
+                        <div class="section-title">医学检索与研究 AI ⭐ 医学部重点推荐</div>
+                        <div class="section-subtitle">循证医学三重验证组合 · 仅用于公开文献检索</div>
+                    </div>
+                </div>
+                <div class="tools-grid" id="grid-medical">
+
+                    <div class="tool-card medical featured" data-name="Elicit" data-tags="文献 研究 论文 系统综述 数据提取 循证">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon pink-bg">📖</div>
+                                <div>
+                                    <div class="tool-name">Elicit</div>
+                                    <div class="tag-row"><span class="tag">AI 文献助手</span><span class="tag">系统综述</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-star">⭐ 推荐</span>
+                        </div>
+                        <p class="tool-desc">专为研究人员设计的 AI 工具，自动搜索、摘要和分析学术论文，支持系统性文献综述、数据提取和研究问题回答，大幅提升循证医学效率。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">elicit.com</span>
+                            <a href="https://elicit.com" target="_blank" class="launch-btn" style="background:linear-gradient(135deg,#c0356a,#e74c8b);">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card medical featured" data-name="Embase" data-tags="生物医学 数据库 期刊 药物 临床 证据 Elsevier">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon pink-bg">🗄️</div>
+                                <div>
+                                    <div class="tool-name">Embase</div>
+                                    <div class="tag-row"><span class="tag">生物医学数据库</span><span class="tag">8500+ 期刊</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-star">⭐ 推荐</span>
+                        </div>
+                        <p class="tool-desc">Elsevier 权威生物医学文献数据库，覆盖 8500+ 期刊，集成 AI 搜索功能，专业药物研发和临床证据检索，医学部必备工具。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">embase.com</span>
+                            <a href="https://embase.com/search/quick" target="_blank" class="launch-btn" style="background:linear-gradient(135deg,#c0356a,#e74c8b);">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card medical" data-name="Consensus" data-tags="学术 科学 同行评审 临床证据 共识">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon pink-bg">🎯</div>
+                                <div>
+                                    <div class="tool-name">Consensus</div>
+                                    <div class="tag-row"><span class="tag">学术 AI 搜索</span><span class="tag">同行评审</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-medical">医学研究</span>
+                        </div>
+                        <p class="tool-desc">专为科学文献设计的 AI 搜索引擎，直接从同行评审论文中提取证据，适合医学部快速检索临床证据和科学共识。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">consensus.app</span>
+                            <a href="https://consensus.app" target="_blank" class="launch-btn" style="background:linear-gradient(135deg,#c0356a,#e74c8b);">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Knowledge Management -->
+            <div class="section-block" data-category="knowledge">
+                <div class="section-header">
+                    <div class="section-icon blue">📚</div>
+                    <div>
+                        <div class="section-title">知识管理与研究</div>
+                        <div class="section-subtitle">文献整理 · 深度问答 · 会议准备</div>
+                    </div>
+                </div>
+                <div class="tools-grid" id="grid-knowledge">
+
+                    <div class="tool-card external" data-name="NotebookLM" data-tags="google 笔记 文档 问答 摘要 播客 文献">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon blue-bg">📓</div>
+                                <div>
+                                    <div class="tool-name">NotebookLM</div>
+                                    <div class="tag-row"><span class="tag teal">AI 知识笔记本</span><span class="tag teal">播客生成</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">Google 出品，上传文档后可进行深度问答、摘要生成和内容分析，支持生成播客音频，适合文献研读和会议准备。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">notebooklm.google.com</span>
+                            <a href="https://notebooklm.google.com" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Creative Tools -->
+            <div class="section-block" data-category="creative">
+                <div class="section-header">
+                    <div class="section-icon orange">🖼️</div>
+                    <div>
+                        <div class="section-title">图像与创意生成</div>
+                        <div class="section-subtitle">注意版权合规 · 内部使用需标注"AI 辅助"</div>
+                    </div>
+                </div>
+                <div class="tools-grid" id="grid-creative">
+
+                    <div class="tool-card external" data-name="Midjourney" data-tags="图像 生成 配图 可视化 演示 版权">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon orange-bg">🎨</div>
+                                <div>
+                                    <div class="tool-name">Midjourney</div>
+                                    <div class="tag-row"><span class="tag teal">AI 图像生成</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">顶级 AI 图像生成工具，适合制作高质量演示配图、概念可视化，注意版权合规，内部使用需标注"AI 辅助"。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">midjourney.com</span>
+                            <a href="https://midjourney.com" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card external" data-name="Sora" data-tags="视频 生成 openai 医学教育 患者 沟通">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon orange-bg">🎬</div>
+                                <div>
+                                    <div class="tool-name">Sora</div>
+                                    <div class="tag-row"><span class="tag teal">AI 视频生成</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">OpenAI 视频生成模型，可将文字描述转化为高质量视频，适合医学教育内容和患者沟通材料制作。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">sora.com</span>
+                            <a href="https://sora.com" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Dev Tools -->
+            <div class="section-block" data-category="dev">
+                <div class="section-header">
+                    <div class="section-icon blue">💻</div>
+                    <div>
+                        <div class="section-title">开发与技术工具</div>
+                        <div class="section-subtitle">数字化项目开发 · 数据分析脚本 · 文档解析</div>
+                    </div>
+                </div>
+                <div class="tools-grid" id="grid-dev">
+
+                    <div class="tool-card external" data-name="GitHub Copilot" data-tags="代码 编程 AI 开发 脚本 数据分析">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon blue-bg">👨‍💻</div>
+                                <div>
+                                    <div class="tool-name">GitHub Copilot</div>
+                                    <div class="tag-row"><span class="tag teal">AI 编程助手</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">GitHub AI 代码助手，支持代码自动补全、生成和审查，适合数字化项目开发和数据分析脚本编写。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">github.com/features/copilot</span>
+                            <a href="https://github.com/features/copilot" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card external" data-name="MinerU" data-tags="PDF 文档解析 提取 医学文献 临床报告 开源">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon blue-bg">⛏️</div>
+                                <div>
+                                    <div class="tool-name">MinerU</div>
+                                    <div class="tag-row"><span class="tag teal">文档解析</span><span class="tag teal">开源免费</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">免费开源文档解析工具，支持 PDF/Word 等格式的高精度内容提取，适合处理医学文献、临床报告等复杂文档。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">mineru.net</span>
+                            <a href="https://mineru.net" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card external" data-name="Cursor" data-tags="代码编辑器 AI 开发 Sanofi Digital 2026">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon blue-bg">⌨️</div>
+                                <div>
+                                    <div class="tool-name">Cursor</div>
+                                    <div class="tag-row"><span class="tag teal">AI 代码编辑器</span><span class="tag teal">2026 标准</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">AI 原生代码编辑器，已被 Sanofi Digital 2026 目标列为标准开发工具，大幅提升编程效率，适合技术团队使用。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">cursor.com</span>
+                            <a href="https://cursor.com" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Presentation Tools -->
+            <div class="section-block" data-category="presentation">
+                <div class="section-header">
+                    <div class="section-icon green">🎯</div>
+                    <div>
+                        <div class="section-title">演示与效率工具</div>
+                        <div class="section-subtitle">快速制作演示文稿 · 会议记录自动化</div>
+                    </div>
+                </div>
+                <div class="tools-grid" id="grid-presentation">
+
+                    <div class="tool-card external" data-name="Gamma" data-tags="PPT 演示 AI 汇报 医学教育 快速生成">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon green-bg">📊</div>
+                                <div>
+                                    <div class="tool-name">Gamma</div>
+                                    <div class="tag-row"><span class="tag teal">AI 演示文稿</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">AI 驱动的演示文稿生成工具，输入主题即可快速生成精美 PPT，适合快速制作内部汇报和医学教育材料。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">gamma.app</span>
+                            <a href="https://gamma.app" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card external" data-name="Otter.ai" data-tags="会议 转录 摘要 行动项 跨时区 记录">
+                        <div class="card-header">
+                            <div class="card-icon-name">
+                                <div class="tool-icon green-bg">🎙️</div>
+                                <div>
+                                    <div class="tool-name">Otter.ai</div>
+                                    <div class="tag-row"><span class="tag teal">AI 会议记录</span><span class="tag teal">实时转录</span></div>
+                                </div>
+                            </div>
+                            <span class="tool-type-badge badge-external">外部</span>
+                        </div>
+                        <p class="tool-desc">实时会议转录和摘要工具，自动生成会议纪要和行动项，适合跨时区团队会议记录，注意保密信息处理。</p>
+                        <div class="card-footer">
+                            <span class="tool-url">otter.ai</span>
+                            <a href="https://otter.ai" target="_blank" class="launch-btn teal">🚀 前往使用</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- WORKFLOW SECTION -->
+        <div class="content-section" id="section-workflow">
+            <div class="workflow-section">
+                <div class="section-header">
+                    <div class="section-icon purple">⚡</div>
+                    <div>
+                        <div class="section-title">医学部推荐工作流组合</div>
+                        <div class="section-subtitle">针对疫苗医学部日常场景的最优工具组合</div>
+                    </div>
+                </div>
+                <div class="workflow-grid">
+                    <div class="workflow-card">
+                        <div class="workflow-title">🔬 循证医学研究</div>
+                        <ul class="workflow-steps">
+                            <li><span class="step-num">1</span>Elicit 快速筛选文献</li>
+                            <li><span class="step-num">2</span>Embase 深度检索验证</li>
+                            <li><span class="step-num">3</span>Consensus 获取科学共识</li>
+                            <li><span class="step-num">4</span>NotebookLM 整理分析</li>
+                            <li><span class="step-num">5</span>Concierge 生成内部报告</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-title">📊 医学策略规划</div>
+                        <ul class="workflow-steps">
+                            <li><span class="step-num">1</span>MedIS 分析 MSL/KOL 数据</li>
+                            <li><span class="step-num">2</span>Plai 整合商业财务数据</li>
+                            <li><span class="step-num">3</span>Perplexity 检索行业动态</li>
+                            <li><span class="step-num">4</span>Gamma 快速生成策略 PPT</li>
+                            <li><span class="step-num">5</span>DAI VINCI 合规内容输出</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-title">✍️ 医学写作流程</div>
+                        <ul class="workflow-steps">
+                            <li><span class="step-num">1</span>Consensus 获取科学共识</li>
+                            <li><span class="step-num">2</span>Claude 长文档处理写作</li>
+                            <li><span class="step-num">3</span>Concierge 内部知识补充</li>
+                            <li><span class="step-num">4</span>Medvi 合规语言审查</li>
+                            <li><span class="step-num">5</span>DAI VINCI MLR 提交</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-title">🎨 演示材料制作</div>
+                        <ul class="workflow-steps">
+                            <li><span class="step-num">1</span>Concierge 整理内容框架</li>
+                            <li><span class="step-num">2</span>Gamma 快速生成 PPT</li>
+                            <li><span class="step-num">3</span>Midjourney 配图优化</li>
+                            <li><span class="step-num">4</span>Sora 制作教育视频</li>
+                            <li><span class="step-num">5</span>Otter.ai 会议记录跟进</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-title">🌏 跨区域协作</div>
+                        <ul class="workflow-steps">
+                            <li><span class="step-num">1</span>Concierge 多语言翻译</li>
+                            <li><span class="step-num">2</span>Otter.ai 跨时区会议记录</li>
+                            <li><span class="step-num">3</span>DAI VINCI 内容本地化</li>
+                            <li><span class="step-num">4</span>OneSupport IT 问题解决</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-title">🛡️ 合规管理流程</div>
+                        <ul class="workflow-steps">
+                            <li><span class="step-num">1</span>Medvi 拜访记录审查</li>
+                            <li><span class="step-num">2</span>MedIS 数据合规入库</li>
+                            <li><span class="step-num">3</span>AI Foundry 项目合规开发</li>
+                            <li><span class="step-num">4</span>DAI VINCI MLR 自动提交</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILTERED SECTIONS (for tabs) -->
+        <div class="content-section" id="section-internal"></div>
+        <div class="content-section" id="section-external"></div>
+        <div class="content-section" id="section-medical"></div>
+        <div class="content-section" id="section-knowledge"></div>
+        <div class="content-section" id="section-creative"></div>
+        <div class="content-section" id="section-dev"></div>
+        <div class="content-section" id="section-presentation"></div>
+
+    </div>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+
+        <!-- Quick Links -->
+        <div class="sidebar-card">
+            <div class="sidebar-title">🔗 Sanofi 内部快速入口</div>
+            <a href="https://concierge.sanofi.com" target="_blank" class="quick-link">
+                <div class="quick-link-icon ql-purple">🤖</div>
+                Concierge AI 助手
+                <span class="quick-link-arrow">↗</span>
+            </a>
+            <a href="https://plai.sanofi.com" target="_blank" class="quick-link">
+                <div class="quick-link-icon ql-teal">📊</div>
+                Plai 决策平台
+                <span class="quick-link-arrow">↗</span>
+            </a>
+            <a href="https://medinsights.sanofi.com" target="_blank" class="quick-link">
+                <div class="quick-link-icon" style="background:rgba(231,76,139,0.1);">🏥</div>
+                MedIS 医学洞察
+                <span class="quick-link-arrow">↗</span>
+            </a>
+            <a href="https://sanofi.sharepoint.com/sites/bp_global-digital-data/SitePages/The-AI-Foundry.aspx" target="_blank" class="quick-link">
+                <div class="quick-link-icon ql-blue">🧠</div>
+                AI Foundry
+                <span class="quick-link-arrow">↗</span>
+            </a>
+            <a href="https://sanofiservices.service-now.com/onesupport" target="_blank" class="quick-link">
+                <div class="quick-link-icon ql-orange">🎫</div>
+                OneSupport 服务台
+                <span class="quick-link-arrow">↗</span>
+            </a>
+            <a href="https://sanofi.sharepoint.com/sites/bp_global-digital-data/SitePages/Medvi.aspx" target="_blank" class="quick-link">
+                <div class="quick-link-icon" style="background:rgba(231,76,139,0.1);">🛡️</div>
+                Medvi 合规工具
+                <span class="quick-link-arrow">↗</span>
+            </a>
+        </div>
+
+        <!-- Compliance Card -->
+        <div class="sidebar-card compliance-card">
+            <div class="sidebar-title">⚠️ 合规使用提示</div>
+            <div class="compliance-item">
+                <div class="compliance-icon">✅</div>
+                <div class="compliance-text">
+                    <strong>内部工具优先</strong>
+                    <p>Concierge、MedIS、Medvi 等内部工具已通过安全审查，处理内部数据时优先使用。</p>
+                </div>
+            </div>
+            <div class="compliance-item">
+                <div class="compliance-icon">🚫</div>
+                <div class="compliance-text">
+                    <strong>禁止上传内部数据</strong>
+                    <p>使用 ChatGPT、Claude 等外部工具时，严禁上传患者数据、内部研究数据及商业机密。</p>
+                </div>
+            </div>
+            <div class="compliance-item">
+                <div class="compliance-icon">📋</div>
+                <div class="compliance-text">
+                    <strong>遵循 AI Readiness Guidelines</strong>
+                    <p>所有 AI 工具使用须符合 Sanofi AI 就绪指南，外部工具使用前请确认合规性。</p>
+                </div>
+            </div>
+            <div class="compliance-item">
+                <div class="compliance-icon">🏷️</div>
+                <div class="compliance-text">
+                    <strong>标注 AI 辅助内容</strong>
+                    <p>AI 生成的图像、文档用于内部时需标注"AI 辅助生成"，注意版权合规。</p>
+                </div>
+            </div>
+            <button class="modal-btn" onclick="openComplianceModal()" style="width:100%;justify-content:center;margin-top:12px;">
+                📖 查看完整合规指南
+            </button>
+        </div>
+
+        <!-- Data Protection -->
+        <div class="sidebar-card">
+            <div class="sidebar-title">🔒 数据保护规则</div>
+            <div class="protection-rule">
+                <div class="rule-dot dot-green"></div>
+                <div class="rule-text"><strong>可以做：</strong>使用公开文献、行业报告进行检索分析</div>
+            </div>
+            <div class="protection-rule">
+                <div class="rule-dot dot-green"></div>
+                <div class="rule-text"><strong>可以做：</strong>用内部工具处理 Sanofi 内部数据</div>
+            </div>
+            <div class="protection-rule">
+                <div class="rule-dot dot-red"></div>
+                <div class="rule-text"><strong>禁止：</strong>向外部 AI 上传患者个人信息（PII）</div>
+            </div>
+            <div class="protection-rule">
+                <div class="rule-dot dot-red"></div>
+                <div class="rule-text"><strong>禁止：</strong>上传未公开的临床试验数据</div>
+            </div>
+            <div class="protection-rule">
+                <div class="rule-dot dot-red"></div>
+                <div class="rule-text"><strong>禁止：</strong>分享商业策略、财务预测等机密信息</div>
+            </div>
+            <div class="protection-rule">
+                <div class="rule-dot dot-yellow"></div>
+                <div class="rule-text"><strong>注意：</strong>会议记录工具（Otter.ai）使用时注意保密信息</div>
+            </div>
+            <div class="protection-rule">
+                <div class="rule-dot dot-yellow"></div>
+                <div class="rule-text"><strong>注意：</strong>AI 生成内容需人工审核后方可对外发布</div>
+            </div>
+        </div>
+
+    </aside>
+</div>
+
+<!-- ===== COMPLIANCE MODAL ===== -->
+<div class="modal-overlay" id="complianceModal" onclick="closeModalOnOverlay(event)">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title">🛡️ AI 工具合规使用指南</div>
+            <button class="modal-close" onclick="closeComplianceModal()">✕</button>
+        </div>
+
+        <div class="modal-section">
+            <h4>✅ 内部工具使用原则</h4>
+            <div class="modal-rule">
+                <span class="modal-rule-icon">🏢</span>
+                <span class="modal-rule-text">Concierge、MedIS、Medvi、Plai 等内部工具已通过 Sanofi 安全审查，可处理内部数据，<strong>优先使用</strong>。</span>
+            </div>
+            <div class="modal-rule">
+                <span class="modal-rule-icon">🔐</span>
+                <span class="modal-rule-text">内部工具数据存储在 Sanofi 安全环境中，符合 GDPR 及公司数据保护政策。</span>
+            </div>
+        </div>
+
+        <div class="modal-section">
+            <h4>⚠️ 外部工具使用规范</h4>
+            <div class="modal-rule">
+                <span class="modal-rule-icon">🚫</span>
+                <span class="modal-rule-text">严禁上传：患者个人信息（PII）、未公开临床数据、商业机密、财务预测、员工个人信息。</span>
+            </div>
+            <div class="modal-rule">
+                <span class="modal-rule-icon">📋</span>
+                <span class="modal-rule-text">使用前确认已阅读并遵循 <strong>Sanofi AI Readiness Guidelines</strong>（可通过 AI Foundry 获取）。</span>
+            </div>
+            <div class="modal-rule">
+                <span class="modal-rule-icon">✍️</span>
+                <span class="modal-rule-text">AI 生成内容用于对外发布前，必须经过人工审核和 MLR 合规审查。</span>
+            </div>
+        </div>
+
+        <div class="modal-section">
+            <h4>🔬 医学研究工具专项规范</h4>
+            <div class="modal-rule">
+                <span class="modal-rule-icon">📖</span>
+                <span class="modal-rule-text">Elicit、Embase、Consensus 仅用于<strong>公开文献检索</strong>，禁止上传内部研究数据。</span>
+            </div>
+            <div class="modal-rule">
+                <span class="modal-rule-icon">🎙️</span>
+                <span class="modal-rule-text">Otter.ai 会议记录时，提前告知参会者并避免录制含保密信息的讨论内容。</span>
+            </div>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="https://sanofi.sharepoint.com/sites/bp_global-digital-data/SitePages/The-AI-Foundry.aspx" target="_blank" class="modal-btn">
+                🧠 AI Foundry 合规资源
+            </a>
+            <a href="https://sanofiservices.service-now.com/onesupport" target="_blank" class="modal-btn" style="background:linear-gradient(135deg,var(--sanofi-teal),var(--sanofi-teal-light));">
+                🎫 提交合规咨询
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-left">
+            <div class="footer-logo">SANOFI</div>
+            <div class="footer-divider"></div>
+            <div class="footer-text">
+                疫苗医学部 AI 工具全家桶 · Vaccine Medical AI Tools Suite<br>
+                <span style="font-size:11px;opacity:0.6;">© 2026 Sanofi · 仅供内部使用 · For Internal Use Only</span>
+            </div>
+        </div>
+        <div class="footer-team">
+            Crafted with ❤️ by<br>
+            <span>Vx Medical Planning & Operation Team</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // ===== DATA =====
+    const toolData = [
+        { name: 'Concierge', category: 'internal', tags: 'genai 对话 助手 邮件 翻译 文档 内部 知识库' },
+        { name: 'DAI VINCI', category: 'internal', tags: '内容生成 本地化 邮件 品牌 MLR 合规 商业' },
+        { name: 'Plai', category: 'internal', tags: '决策 数据 财务 商业 供应链 分析 预测' },
+        { name: 'MedIS', category: 'internal', tags: '医学 洞察 MSL 拜访 KOL 数据分析 医学部' },
+        { name: 'AI Foundry', category: 'internal', tags: 'AI开发 平台 ML GenAI 项目 研究' },
+        { name: 'OneAI', category: 'internal', tags: 'MLOps AI模型 部署 监控 机器学习' },
+        { name: 'Medvi', category: 'internal', tags: '合规 CRM 拜访记录 审查 医学部' },
+        { name: 'OneSupport', category: 'internal', tags: 'IT 支持 工单 服务台 HR 财务' },
+        { name: 'ChatGPT', category: 'external', tags: 'openai gpt 对话 代码 图像 多模态' },
+        { name: 'Claude', category: 'external', tags: 'anthropic 长文本 文档分析 学术 推理 安全' },
+        { name: 'Gemini', category: 'external', tags: 'google 多模态 搜索 文档 邮件 实时' },
+        { name: 'Perplexity', category: 'external', tags: '搜索 引用 文献 实时 行业 竞品' },
+        { name: 'Elicit', category: 'medical', tags: '文献 研究 论文 系统综述 数据提取 循证' },
+        { name: 'Embase', category: 'medical', tags: '生物医学 数据库 期刊 药物 临床 证据 Elsevier' },
+        { name: 'Consensus', category: 'medical', tags: '学术 科学 同行评审 临床证据 共识' },
+        { name: 'NotebookLM', category: 'knowledge', tags: 'google 笔记 文档 问答 摘要 播客 文献' },
+        { name: 'Midjourney', category: 'creative', tags: '图像 生成 配图 可视化 演示 版权' },
+        { name: 'Sora', category: 'creative', tags: '视频 生成 openai 医学教育 患者 沟通' },
+        { name: 'GitHub Copilot', category: 'dev', tags: '代码 编程 AI 开发 脚本 数据分析' },
+        { name: 'MinerU', category: 'dev', tags: 'PDF 文档解析 提取 医学文献 临床报告 开源' },
+        { name: 'Cursor', category: 'dev', tags: '代码编辑器 AI 开发 Sanofi Digital 2026' },
+        { name: 'Gamma', category: 'presentation', tags: 'PPT 演示 AI 汇报 医学教育 快速生成' },
+        { name: 'Otter.ai', category: 'presentation', tags: '会议 转录 摘要 行动项 跨时区 记录' },
+    ];
+
+    let currentTab = 'all';
+    let searchQuery = '';
+
+    // ===== TAB SWITCHING =====
+    function switchTab(tab, btn) {
+        currentTab = tab;
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+
+        if (tab === 'all') {
+            document.getElementById('section-all').classList.add('active');
+            if (searchQuery) filterCards(searchQuery);
+        } else if (tab === 'workflow') {
+            document.getElementById('section-workflow').classList.add('active');
+        } else {
+            const section = document.getElementById('section-' + tab);
+            section.classList.add('active');
+            // Clone relevant cards into this section
+            renderFilteredSection(tab, section);
+        }
+    }
+
+    function renderFilteredSection(category, container) {
+        container.innerHTML = '';
+        const sourceGrid = document.getElementById('grid-' + category);
+        if (!sourceGrid) return;
+
+        const sectionBlock = sourceGrid.closest('.section-block');
+        if (sectionBlock) {
+            const clone = sectionBlock.cloneNode(true);
+            container.appendChild(clone);
+        }
+    }
+
+    // ===== SEARCH =====
+    function handleSearch(value) {
+        searchQuery = value.toLowerCase().trim();
+        const clearBtn = document.getElementById('searchClear');
+        clearBtn.classList.toggle('visible', searchQuery.length > 0);
+
+        if (searchQuery) {
+            // Switch to all tab for search
+            if (currentTab !== 'all') {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelector('.nav-tab').classList.add('active');
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                document.getElementById('section-all').classList.add('active');
+                currentTab = 'all';
+            }
+            filterCards(searchQuery);
+        } else {
+            showAllCards();
+        }
+    }
+
+    function filterCards(query) {
+        const allCards = document.querySelectorAll('#section-all .tool-card');
+        let visibleCount = 0;
+
+        allCards.forEach(card => {
+            const name = (card.dataset.name || '').toLowerCase();
+            const tags = (card.dataset.tags || '').toLowerCase();
+            const desc = card.querySelector('.tool-desc')?.textContent.toLowerCase() || '';
+
+            const matches = name.includes(query) || tags.includes(query) || desc.includes(query);
+            card.style.display = matches ? '' : 'none';
+            if (matches) visibleCount++;
+        });
+
+        // Show/hide section blocks based on visible cards
+        document.querySelectorAll('#section-all .section-block').forEach(block => {
+            const visibleCards = block.querySelectorAll('.tool-card:not([style*="display: none"])');
+            block.style.display = visibleCards.length > 0 ? '' : 'none';
+        });
+
+        document.getElementById('noResults').classList.toggle('visible', visibleCount === 0);
+    }
+
+    function showAllCards() {
+        document.querySelectorAll('#section-all .tool-card').forEach(card => {
+            card.style.display = '';
+        });
+        document.querySelectorAll('#section-all .section-block').forEach(block => {
+            block.style.display = '';
+        });
+        document.getElementById('noResults').classList.remove('visible');
+    }
+
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        handleSearch('');
+    }
+
+    // ===== MODAL =====
+    function openComplianceModal() {
+        document.getElementById('complianceModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeComplianceModal() {
+        document.getElementById('complianceModal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function closeModalOnOverlay(e) {
+        if (e.target === document.getElementById('complianceModal')) {
+            closeComplianceModal();
+        }
+    }
+
+    // Close modal on Escape
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeComplianceModal();
+    });
+
+    // ===== CARD CLICK (launch) =====
+    document.querySelectorAll('.tool-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (e.target.closest('.launch-btn')) return;
+            const btn = this.querySelector('.launch-btn');
+            if (btn) btn.click();
+        });
+    });
+</script>
+
+</body>
+</html>
+```
